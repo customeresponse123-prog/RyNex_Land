@@ -1,6 +1,29 @@
 (function () {
   "use strict";
 
+  var menuBtn = document.getElementById("header-menu-btn");
+  var siteNav = document.getElementById("site-nav");
+  function setMenuOpen(open) {
+    if (!menuBtn || !siteNav) return;
+    siteNav.classList.toggle("is-open", open);
+    menuBtn.classList.toggle("is-open", open);
+    menuBtn.setAttribute("aria-expanded", open ? "true" : "false");
+    menuBtn.setAttribute("aria-label", open ? "Close navigation menu" : "Open navigation menu");
+  }
+  if (menuBtn && siteNav) {
+    menuBtn.addEventListener("click", function () {
+      setMenuOpen(!siteNav.classList.contains("is-open"));
+    });
+    siteNav.querySelectorAll('a[href^="#"]').forEach(function (link) {
+      link.addEventListener("click", function () {
+        setMenuOpen(false);
+      });
+    });
+    window.addEventListener("resize", function () {
+      if (window.innerWidth > 768) setMenuOpen(false);
+    });
+  }
+
   var WEB3FORMS_URL = "https://api.web3forms.com/submit";
 
   function getApiBase() {

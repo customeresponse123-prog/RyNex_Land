@@ -2,7 +2,8 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#163020" />
     <title>RyNex Land | Sell Your Land Quickly & Hassle-Free</title>
     <meta
       name="description"
@@ -16,9 +17,24 @@
       <header class="site-header">
         <div class="header-inner">
           <a href="./" class="header-logo" aria-label="RyNex Land — home">
-            <img src="./LOGO.png" alt="" width="72" height="72" />
+            <img src="./LOGO.png" alt="" width="200" height="48" decoding="async" />
           </a>
-          <nav class="header-nav">
+          <button
+            type="button"
+            class="header-menu-btn"
+            id="header-menu-btn"
+            aria-expanded="false"
+            aria-controls="site-nav"
+            aria-label="Open navigation menu"
+          >
+            <svg class="header-menu-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path
+                fill="currentColor"
+                d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"
+              />
+            </svg>
+          </button>
+          <nav id="site-nav" class="header-nav" aria-label="Primary">
             <a href="#how-it-works">How it works</a>
             <a href="#why-trust">Why trust us</a>
             <a href="#form">Get an offer</a>
