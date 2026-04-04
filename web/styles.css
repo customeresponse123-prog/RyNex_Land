@@ -28,6 +28,14 @@ a {
   text-decoration: none;
 }
 
+/* Prevent media from forcing horizontal scroll (keep SVG sizing controlled per component) */
+img,
+video,
+canvas {
+  max-width: 100%;
+  height: auto;
+}
+
 /* Layout shells */
 .page-shell {
   min-height: 100vh;
@@ -108,6 +116,7 @@ a {
   background: #fff;
   color: #163020;
   cursor: pointer;
+  touch-action: manipulation;
   transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 
@@ -169,7 +178,7 @@ a {
     width: 100%;
     order: 3;
     gap: 0;
-    margin: 0 -0.25rem;
+    margin: 0;
     padding: 0.25rem 0 0.5rem;
     border-top: 1px solid rgba(22, 48, 32, 0.1);
     animation: navSlide 0.25s ease;
@@ -215,6 +224,33 @@ a {
   width: 100%;
 }
 
+/* Stack hero below desktop width so copy + form are not squeezed on tablets */
+@media (max-width: 1024px) {
+  .hero-content-split {
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+  }
+
+  .hero-details {
+    max-width: 40rem;
+  }
+
+  .hero-details .hero-cta,
+  .hero-details .hero-stats {
+    justify-content: center;
+  }
+
+  .hero-pills-box {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-form-wrap {
+    max-width: min(28rem, 100%);
+  }
+}
+
 @media (max-width: 768px) {
   .hero-section {
     min-height: min(100dvh, 56rem);
@@ -225,9 +261,6 @@ a {
   }
 
   .hero-content-split {
-    flex-direction: column;
-    text-align: center;
-    align-items: center;
     gap: clamp(1.75rem, 5vw, 2.5rem);
     padding-left: clamp(1rem, 4vw, 2rem);
     padding-right: clamp(1rem, 4vw, 2rem);
@@ -241,7 +274,9 @@ a {
     justify-content: center;
     margin-left: auto;
     margin-right: auto;
+    width: 100%;
     max-width: 100%;
+    box-sizing: border-box;
   }
 
   .hero-form-wrap {
@@ -320,12 +355,33 @@ a {
   select.hero-form-input {
     font-size: 16px;
   }
+
+  .meet-founder-btn {
+    width: 100%;
+    max-width: 22rem;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 380px) {
+  .hero-title {
+    font-size: 1.45rem;
+  }
+
+  .process-step {
+    padding: 1.5rem 1.1rem;
+  }
 }
 
 .container-shell {
+  width: 100%;
   max-width: 1120px;
+  min-width: 0;
   margin: 0 auto;
   padding: 0 clamp(1rem, 4vw, 1.5rem);
+  box-sizing: border-box;
 }
 
 /* Hero — photo via <img.hero-bg-image> so iOS/Android reliably show it (CSS bg + fixed attachment often fails on mobile) */
@@ -551,6 +607,7 @@ a {
 
 .hero-form-btn {
   width: 100%;
+  min-height: 48px;
   padding: 1rem 1.5rem;
   border: none;
   border-radius: 10px;
@@ -560,6 +617,7 @@ a {
   font-weight: 600;
   cursor: pointer;
   margin-top: 0.25rem;
+  touch-action: manipulation;
 }
 
 .hero-form-btn:hover {
@@ -642,6 +700,7 @@ a {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  min-height: 44px;
   padding: 0.75rem 1.5rem;
   border-radius: 10px;
   border: none;
@@ -653,6 +712,8 @@ a {
   cursor: pointer;
   transition: all 0.3s ease;
   text-decoration: none;
+  touch-action: manipulation;
+  box-sizing: border-box;
 }
 
 .primary-button:hover {
@@ -679,10 +740,11 @@ a {
 }
 
 .section-title {
-  font-size: 1.75rem;
+  font-size: clamp(1.35rem, 3.5vw, 1.75rem);
   font-weight: 600;
   letter-spacing: -0.02em;
   margin: 0 0 2rem;
+  text-wrap: balance;
 }
 
 .section-title-left {
@@ -716,11 +778,28 @@ a {
   margin-left: 0.5rem;
 }
 
+@media (max-width: 520px) {
+  .section-title-with-divider {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.65rem;
+    text-align: center;
+  }
+
+  .section-title-with-divider::before,
+  .section-title-with-divider::after {
+    flex: 1 1 20%;
+    max-width: 48px;
+    min-width: 24px;
+  }
+}
+
 .real-buyer-body {
   max-width: 809px;
-   font-size: 1.1rem;
+  font-size: clamp(1rem, 2.2vw, 1.1rem);
   line-height: 1.7;
-  color: #4b5563
+  color: #4b5563;
+  overflow-wrap: break-word;
 }
 
 /* Meet the Founder — text only; spacing from .section-alt */
@@ -750,15 +829,16 @@ a {
   margin-top: 2rem;
 }
 
-@media (min-width: 480px) and (max-width: 767px) {
+/* 2×2 on phones/tablets; 4 across only on wide screens */
+@media (min-width: 480px) {
   .trust-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   .trust-grid {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
 
@@ -813,15 +893,15 @@ a {
   margin-top: 2rem;
 }
 
-@media (min-width: 480px) and (max-width: 767px) {
+@media (min-width: 480px) {
   .process-grid-new {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   .process-grid-new {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
 
@@ -877,11 +957,17 @@ a {
   grid-template-columns: 1fr;
   gap: 2.5rem;
   align-items: start;
+  min-width: 0;
+}
+
+.situations-form-col,
+.situations-faq-col {
+  min-width: 0;
 }
 
 @media (min-width: 900px) {
   .situations-split {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   }
 }
 
@@ -889,9 +975,10 @@ a {
 .situations-form-col form {
   background: #F7F4EC;
   border-radius: 10px;
-  padding: 2rem;
+  padding: clamp(1.25rem, 4vw, 2rem);
   border: 1px solid #e5e0d8;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+  box-sizing: border-box;
 }
 
 .situations-form {
@@ -1003,9 +1090,11 @@ a {
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  font-size: 1rem;
+  font-size: clamp(0.95rem, 2.5vw, 1rem);
   font-weight: 500;
   color: #163020;
+  overflow-wrap: break-word;
+  hyphens: auto;
 }
 
 .faq-item > summary::-webkit-details-marker {
@@ -1144,9 +1233,15 @@ a {
 }
 
 .footer-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  max-width: 100%;
+  padding: 0.85rem 1.5rem;
+  box-sizing: border-box;
   background: #4A6E4F;
   color: #fff;
-  padding: 0.85rem 1.6rem;
   border-radius: 10px;
   font-weight: 600;
   text-decoration: none;
@@ -1228,6 +1323,9 @@ a {
   flex-basis: 100%;
   font-size: 0.92rem;
   color: rgba(255, 254, 254, 0.8);
+  overflow-wrap: anywhere;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
 }
 
 /* Process/How It Works Section (legacy) */
@@ -1615,15 +1713,18 @@ a {
 
 .form-input,
 .form-textarea {
-  margin: 10px;
+  margin: 0;
   width: 100%;
+  min-width: 0;
+  max-width: 100%;
   border-radius: 0.75rem;
   border: 1px solid #cbd5e1;
   background-color: #f9fafb;
-  padding: 0.6rem 0.75rem;
+  padding: 0.65rem 0.85rem;
   font-size: 0.9rem;
   color: #111827;
   box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.05);
+  box-sizing: border-box;
 }
 
 .form-input::placeholder,
