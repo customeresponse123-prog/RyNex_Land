@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import HeroLeadForm from "../components/HeroLeadForm";
 import SellerForm from "../components/SellerForm";
 
-const ownerImgSrc = "/owner.png?v=" + Date.now();
+/** Served from `client/public/LOGO.png` */
+const LOGO_SRC = "/LOGO.png";
 
 const INITIAL_FAQ_COUNT = 3;
 
@@ -147,9 +148,9 @@ function Home() {
     <div className="page-shell">
       <header className="site-header">
         <div className="header-inner">
-          <Link to="/" className="header-logo">
-            <img src="/Logo.png" alt="RyNex Land logo" />
-            <span>RyNex Land</span>
+          <Link to="/" className="header-logo" aria-label="RyNex Land — home">
+            <img src={LOGO_SRC} alt="" width={72} height={72} />
+            {/* <span>RyNex Land</span> */}
           </Link>
           <nav className="header-nav">
             <a href="#how-it-works">How it works</a>
@@ -194,30 +195,15 @@ function Home() {
 
         {/* Meet the Founder */}
         <section id="about" className="section-alt meet-founder-section">
-          <div className="container-shell meet-founder-inner">
-            <div className="meet-founder-content">
-              <h2 className="meet-founder-title">Meet the Founder</h2>
-              <p className="meet-founder-body">
-                Dipal Patel founded RyNex Land to give landowners a straightforward option: sell your vacant land to a real buyer, with no pressure and no hidden fees. With experience in real estate and a focus on Tennessee, North Carolina, Georgia, and Alabama, Dipal and the team work directly with sellers to make the process simple—from first conversation to closing at a title company. We cover closing costs and handle the details so you can move on.
-              </p>
-              <a href="#form" className="primary-button meet-founder-btn">
-                Learn More About Our Story →
-              </a>
-            </div>
-            <div className="meet-founder-photo-wrap">
-              <img
-                src={ownerImgSrc}
-                alt="Dipal Patel, Founder of RyNex Land"
-                className="meet-founder-img"
-                onError={(e) => {
-                  e.target.src = "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=600&q=80";
-                  e.target.onerror = null;
-                }}
-              />
-              <div className="meet-founder-overlay">
-                <span className="meet-founder-name">Dipal Patel / Founder of RyNex Land</span>
-              </div>
-            </div>
+          <div className="container-shell">
+            <h2 className="section-title section-title-left">Meet the Founder</h2>
+            <p className="meet-founder-byline">Dipal Patel / Founder of RyNex Land</p>
+            <p className="real-buyer-body meet-founder-body">
+              Dipal Patel founded RyNex Land to give landowners a straightforward option: sell your vacant land to a real buyer, with no pressure and no hidden fees. With experience in real estate and a focus on Tennessee, North Carolina, Georgia, and Alabama, Dipal and the team work directly with sellers to make the process simple—from first conversation to closing at a title company. We cover closing costs and handle the details so you can move on.
+            </p>
+            <a href="#form" className="primary-button meet-founder-btn">
+              Learn More About Our Story →
+            </a>
           </div>
         </section>
 
@@ -370,7 +356,8 @@ function Home() {
         </div>
         <div className="footer-bar">
           <div className="footer-logo-wrap">
-            <img src="/Logo.png" alt="RyNex Land" className="footer-logo-img" />
+            <img src={LOGO_SRC} alt="" className="footer-logo-img" width={40} height={40} />
+            <span className="footer-brand-text">RyNex Land</span>
           </div>
           <a href="mailto:info@rynexland.com" className="footer-email">info@rynexland.com</a>
           <p className="footer-legal">©2025 RyNex | Privacy Policy | Terms of Service</p>

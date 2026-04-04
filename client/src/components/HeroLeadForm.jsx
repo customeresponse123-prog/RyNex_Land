@@ -7,7 +7,6 @@ const COUNTIES = ["Davidson", "Shelby", "Knox", "Hamilton", "Rutherford", "Meckl
 function HeroLeadForm() {
   const [formData, setFormData] = useState({
     name: "",
-    phone: "",
     email: "",
     county: "",
     state: ""
@@ -23,13 +22,14 @@ function HeroLeadForm() {
     try {
       await axios.post("http://localhost:5000/api/leads/submit", {
         ...formData,
+        phone: "",
         parcel_number: "",
         acres: "",
         asking_price: "",
         notes: formData.state ? `State: ${formData.state}` : ""
       });
       alert("Thanks! We'll be in touch with your offer soon.");
-      setFormData({ name: "", phone: "", email: "", county: "", state: "" });
+      setFormData({ name: "", email: "", county: "", state: "" });
     } catch (err) {
       console.error(err);
       alert("Something went wrong. Please try again.");
@@ -42,15 +42,6 @@ function HeroLeadForm() {
         name="name"
         placeholder="Name"
         value={formData.name}
-        onChange={handleChange}
-        className="hero-form-input"
-        required
-      />
-      <input
-        name="phone"
-        type="tel"
-        placeholder="Phone"
-        value={formData.phone}
         onChange={handleChange}
         className="hero-form-input"
         required

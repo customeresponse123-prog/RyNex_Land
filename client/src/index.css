@@ -62,11 +62,12 @@ a {
 }
 
 .header-logo img {
-  width: 78px;
-  height: 78px;
-  border-radius: 1.25rem;
-  background: transparent;
+  width: 292Px;
+  height: 59px;
+  border-radius: 1rem;
   object-fit: contain;
+  flex-shrink: 0;
+  display: block;
 }
 
 .header-nav {
@@ -148,15 +149,6 @@ a {
     max-width: 300px;
   }
   
-  .meet-founder-inner {
-    flex-direction: column;
-    text-align: center;
-  }
-  
-  .meet-founder-photo-wrap {
-    max-width: 100%;
-  }
-  
   .footer-bar {
     flex-direction: column;
     text-align: center;
@@ -181,7 +173,7 @@ a {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-image: url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80');
+  background-image: url("https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80");
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
@@ -549,77 +541,23 @@ a {
   color: #4b5563
 }
 
-/* Meet the Founder */
-.meet-founder-section {
-  padding: 4rem 0;
-}
-
-.meet-founder-inner {
-  display: flex;
-  align-items: center;
-  gap: 4rem;
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 0 1.5rem;
-}
-
-.meet-founder-content {
-  flex: 1;
-  min-width: 0;
-}
-
-.meet-founder-title {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #163020;
-  margin: 0 0 1.25rem;
+/* Meet the Founder — text only; spacing from .section-alt */
+.meet-founder-byline {
+  margin: 0 0 1rem;
+  max-width: 809px;
+  color: #2d3748;
+  font-weight: 600;
+  font-size: 1rem;
 }
 
 .meet-founder-body {
-  font-size: 1rem;
-  line-height: 1.7;
-  color: #4b5563;
-  margin: 0 0 1.5rem;
+  margin-bottom: 1.5rem;
 }
 
 .meet-founder-btn {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-}
-
-.meet-founder-photo-wrap {
-  position: relative;
-  flex-shrink: 0;
-  width: 100%;
-  max-width: 420px;
-}
-
-.meet-founder-img {
-  width: 100%;
-  height: auto;
-  border-radius: 1rem;
-  object-fit: cover;
-  display: block;
-}
-
-.meet-founder-overlay {
-  position: absolute;
-  bottom: 1rem;
-  left: 1rem;
-  right: 1rem;
-  padding: 0.75rem 1rem;
-  background: rgba(232, 228, 220, 0.92);
-  border-radius: 0.5rem;
-  color: #2d3748;
-}
-
-.meet-founder-name {
-  display: block;
-  font-size: 1rem;
-  font-weight: 600;
-  margin: 0;
-  color: #2d3748;
 }
 
 /* Why Landowners Trust - 4 columns */
@@ -1041,16 +979,23 @@ a {
 .footer-logo-wrap {
   display: flex;
   align-items: center;
-  gap: 0;
+  gap: 0.5rem;
   color: #fff;
   font-weight: 700;
 }
 
 .footer-logo-img {
-  width: 44px;
-  height: 44px;
+  width: 40px;
+  height: 40px;
   object-fit: contain;
-  border-radius: 0.5rem;
+  border-radius: 0.4rem;
+  flex-shrink: 0;
+  display: block;
+}
+
+.footer-brand-text {
+  font-size: 1.05rem;
+  letter-spacing: 0.02em;
 }
 
 .footer-email {

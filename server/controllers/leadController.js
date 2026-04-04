@@ -14,19 +14,20 @@ exports.createLead = async (req, res) => {
       notes
     } = req.body;
 
-    if (!name || !email || !phone || !county) {
+    if (!name || !email || !county) {
       return res.status(400).json({
-        error: "Please fill in all required fields: name, email, phone, and county."
+        error: "Please fill in all required fields: name, email, and county."
       });
     }
 
+    const phoneValue = phone != null && String(phone).trim() !== "" ? phone : "";
     const fullNotes = state ? (notes ? `State: ${state}. ${notes}` : `State: ${state}`) : (notes || null);
     const newLead = await pool.query(
       `INSERT INTO leads
       (name,email,phone,county,parcel_number,acres,asking_price,notes)
       VALUES ($1,$2,$3,$4,$5,$6,$7,$8)
       RETURNING *`,
-      [name, email, phone, county, parcel_number || null, acres || null, asking_price || null, fullNotes]
+      [name, email, phoneValue, county, parcel_number || null, acres || null, asking_price || null, fullNotes]
     );
 
     res.json(newLead.rows[0]);
