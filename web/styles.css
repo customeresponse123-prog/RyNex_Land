@@ -97,7 +97,7 @@ canvas {
   height: auto;
   max-height: clamp(2.75rem, 12vw, 4.25rem);
   max-width: min(300px, 82vw);
-  border-radius: 0.65rem;
+  border-radius: 1.25rem;
   object-fit: contain;
   flex-shrink: 1;
   display: block;
@@ -112,7 +112,7 @@ canvas {
   margin-left: auto;
   padding: 0;
   border: 1px solid rgba(22, 48, 32, 0.2);
-  border-radius: 0.5rem;
+  border-radius: 0.875rem;
   background: #fff;
   color: #163020;
   cursor: pointer;
@@ -1294,10 +1294,10 @@ canvas {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 2.75rem;
+  height: 2.75rem;
   padding: 0;
-  border-radius: 0.5rem;
+  border-radius: 50%;
   background: rgba(255, 255, 255, 0.1);
   color: #fff;
   text-decoration: none;
