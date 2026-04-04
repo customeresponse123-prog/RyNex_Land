@@ -6,6 +6,12 @@ import SellerForm from "../components/SellerForm";
 /** Served from `client/public/LOGO.png` */
 const LOGO_SRC = "/LOGO.png";
 
+const SOCIAL_INSTAGRAM = "https://www.instagram.com/rynexland/";
+const SOCIAL_FACEBOOK = "https://www.facebook.com/rynexland";
+
+const CONTACT_EMAIL = "info@rynexland.com";
+const GMAIL_COMPOSE = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(CONTACT_EMAIL)}`;
+
 const INITIAL_FAQ_COUNT = 3;
 
 const LAND_FAQ_ITEMS = [
@@ -355,11 +361,44 @@ function Home() {
           </div>
         </div>
         <div className="footer-bar">
-          <div className="footer-logo-wrap">
-            <img src={LOGO_SRC} alt="" className="footer-logo-img" width={40} height={40} />
-            <span className="footer-brand-text">RyNex Land</span>
+          <div className="footer-social">
+            <a
+              href={SOCIAL_INSTAGRAM}
+              className="footer-social-btn"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="RyNex Land on Instagram"
+            >
+              <svg className="footer-social-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+              </svg>
+            </a>
+            <a
+              href={SOCIAL_FACEBOOK}
+              className="footer-social-btn"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="RyNex Land on Facebook"
+            >
+              <svg className="footer-social-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+              </svg>
+            </a>
+            <a
+              href={GMAIL_COMPOSE}
+              className="footer-social-btn"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Email ${CONTACT_EMAIL} with Gmail`}
+            >
+              <svg className="footer-social-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z" />
+                <path d="m22 6-10 7L2 6" />
+              </svg>
+            </a>
           </div>
-          <a href="mailto:info@rynexland.com" className="footer-email">info@rynexland.com</a>
           <p className="footer-legal">©2025 RyNex | Privacy Policy | Terms of Service</p>
         </div>
       </footer>

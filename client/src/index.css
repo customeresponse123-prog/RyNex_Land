@@ -969,47 +969,52 @@ a {
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: 0;
+  gap: 0.65rem 1rem;
   padding: 0.9rem 1.25rem;
   background: #1a202c;
   font-size: 0.9rem;
   text-align: center;
 }
 
-.footer-logo-wrap {
+.footer-social {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
+}
+
+.footer-social-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  border-radius: 0.5rem;
+  background: rgba(255, 255, 255, 0.1);
   color: #fff;
-  font-weight: 700;
-}
-
-.footer-logo-img {
-  width: 40px;
-  height: 40px;
-  object-fit: contain;
-  border-radius: 0.4rem;
-  flex-shrink: 0;
-  display: block;
-}
-
-.footer-brand-text {
-  font-size: 1.05rem;
-  letter-spacing: 0.02em;
-}
-
-.footer-email {
-  color: rgba(255, 255, 255, 0.95);
   text-decoration: none;
-  margin-left: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  transition: background 0.2s ease, border-color 0.2s ease;
 }
 
-.footer-email:hover {
-  text-decoration: underline;
+.footer-social-btn:hover {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.35);
+  color: #fff;
+}
+
+.footer-social-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  flex-shrink: 0;
 }
 
 .footer-legal {
-  margin: 0 0 0 0.75rem;
+  margin: 0;
+  width: 100%;
+  flex-basis: 100%;
   font-size: 0.92rem;
   color: rgba(255, 254, 254, 0.8);
 }
