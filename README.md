@@ -1,40 +1,37 @@
 # RyNex_Land
 
-Static marketing site (HTML + CSS + JavaScript) in **`web/`** — no React or build step. Express API in **`server/`**.
+Static marketing site in **`web/`** (HTML + CSS + JavaScript). Express API in **`server/`**.
 
-## GitHub Pages
+## Run the website locally
 
-Workflow [`.github/workflows/deploy-pages.yml`](.github/workflows/deploy-pages.yml) publishes the **`web/`** folder on every push to `main`.
-
-1. **Settings → Pages → Source:** **GitHub Actions**
-2. Live URL: `https://<user>.github.io/RyNex_Land/`
-
-Edit files under **`web/`** only (`index.html`, `styles.css`, `app.js`).
-
-### API URL (lead forms)
-
-In **`web/index.html`**, set the backend origin on `<body>`:
-
-```html
-<body data-api-url="https://your-api.example.com">
-```
-
-Leave empty or omit for `http://localhost:5000` during local testing. Your API must allow **CORS** from your GitHub Pages origin.
-
-## Preview locally
-
-Open `web/index.html` in a browser, or from the repo root:
+From the **repository root** (not inside `web/`):
 
 ```bash
-npx --yes serve web -p 3000
+npm install
+npm run dev
 ```
 
-Then visit `http://localhost:3000`.
+Open **http://127.0.0.1:5173/** in your browser.
 
-## API server (local)
+Do **not** rely on double‑clicking `web/index.html` — some features need a real HTTP server, and scripts may be blocked on `file://`.
+
+## Run the API (for lead forms)
+
+In a **second** terminal:
 
 ```bash
 cd server
 npm install
 npm run dev
 ```
+
+The site uses `http://localhost:5000` for forms unless you set `data-api-url` on `<body>` in `web/index.html`.
+
+## GitHub Pages
+
+Workflow [`.github/workflows/deploy-pages.yml`](.github/workflows/deploy-pages.yml) publishes the **`web/`** folder on push to `main`.
+
+1. **Settings → Pages → Source:** **GitHub Actions**
+2. Site: `https://<user>.github.io/RyNex_Land/`
+
+For production forms, set `data-api-url` to your deployed API and enable **CORS** for your Pages origin.

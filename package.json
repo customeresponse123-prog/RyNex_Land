@@ -1,0 +1,12 @@
+{
+  "name": "rynex-land",
+  "private": true,
+  "description": "Static site in web/ — use npm run dev to preview",
+  "scripts": {
+    "dev": "http-server web -p 5173 -c-1",
+    "start": "http-server web -p 5173 -c-1"
+  },
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
+}
