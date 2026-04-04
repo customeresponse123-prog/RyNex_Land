@@ -206,16 +206,9 @@ a {
   margin-top: 0;
 }
 
-@media (max-width: 1024px) {
-  .hero-section {
-    background-attachment: scroll;
-  }
-}
-
 @media (max-width: 768px) {
   .hero-section {
-    min-height: auto;
-    min-height: unset;
+    min-height: min(100dvh, 56rem);
   }
 
   .hero-content {
@@ -326,22 +319,31 @@ a {
   padding: 0 clamp(1rem, 4vw, 1.5rem);
 }
 
-/* Hero */
+/* Hero — photo via <img.hero-bg-image> so iOS/Android reliably show it (CSS bg + fixed attachment often fails on mobile) */
 .hero-section {
   position: relative;
+  isolation: isolate;
   min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-image: url("https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80");
-  background-size: cover;
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
   overflow: hidden;
+  background-color: #1a3024;
 }
 
-/* Replace the URL above with your own image path: background-image: url('/path-to-your-image.jpg'); */
+.hero-bg-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  z-index: 0;
+  pointer-events: none;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
 
 .hero-overlay {
   position: absolute;
@@ -1052,15 +1054,27 @@ a {
   margin-bottom: 0.35rem;
 }
 
-/* New footer */
+/* New footer — background via <img.footer-bg-image> for mobile-safe rendering */
 .site-footer-new {
   position: relative;
-  background-image: url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  isolation: isolate;
   color: #fff;
   padding: 0;
+  background-color: #1a3024;
+  overflow: hidden;
+}
+
+.footer-bg-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  z-index: 0;
+  pointer-events: none;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
 }
 
 .site-footer-new::before {
@@ -1076,13 +1090,13 @@ a {
     rgba(20, 55, 35, 0.5) 50%,
     rgba(12, 38, 24, 0.55) 100%
   );
-  z-index: 0;
+  z-index: 1;
 }
 
 .site-footer-new .footer-cta-wrap,
 .site-footer-new .footer-bar {
   position: relative;
-  z-index: 1;
+  z-index: 2;
 }
 
 .footer-cta-wrap {
