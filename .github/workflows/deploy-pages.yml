@@ -1,8 +1,11 @@
-name: Deploy to GitHub Pages
+# Publishes ONLY the contents of web/ as the site root (index.html at /).
+# Repository Settings → Pages → Build and deployment → Source: GitHub Actions (not "Deploy from a branch").
+name: Deploy GitHub Pages
 
 on:
   push:
     branches: [main]
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -17,8 +20,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Upload static site
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Verify site entrypoint
+        run: test -f web/index.html
+
+      - name: Upload static site (web/ → site root)
         uses: actions/upload-pages-artifact@v3
         with:
           path: web

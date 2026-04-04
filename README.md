@@ -29,9 +29,9 @@ The site uses `http://localhost:5000` for forms unless you set `data-api-url` on
 
 ## GitHub Pages
 
-Workflow [`.github/workflows/deploy-pages.yml`](.github/workflows/deploy-pages.yml) publishes the **`web/`** folder on push to `main`.
+Workflow [`.github/workflows/deploy-pages.yml`](.github/workflows/deploy-pages.yml) publishes the **contents** of **`web/`** as the site root (so `web/index.html` is served at `/`). It runs on push to `main` and can be re-run manually under **Actions**.
 
-1. **Settings → Pages → Source:** **GitHub Actions**
-2. Site: `https://<user>.github.io/RyNex_Land/`
+1. **Settings → Pages → Build and deployment → Source:** **GitHub Actions** (not “Deploy from a branch”). If Source is set to the **`main`** branch and **`/` (root)`**, GitHub serves the repository root—there is no `index.html` there, so you may see **README.md** instead of the marketing site.
+2. After the first successful deploy, the site URL appears under **Settings → Pages** and in the workflow run (e.g. `https://<user>.github.io/RyNex_Land/`).
 
 For production forms, set `data-api-url` to your deployed API and enable **CORS** for your Pages origin.
