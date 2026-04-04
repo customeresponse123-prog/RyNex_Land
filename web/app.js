@@ -24,6 +24,17 @@
     });
   }
 
+  function web3ResponseOk(data) {
+    return !!(data && (data.success === true || data.success === "true"));
+  }
+
+  function web3ErrorMessage(data, res) {
+    if (!data) return res && res.status ? "HTTP " + res.status : "Empty response";
+    if (data.message) return String(data.message);
+    if (data.body && data.body.message) return String(data.body.message);
+    return "Submission failed";
+  }
+
   function postWeb3Forms(body) {
     return fetch(WEB3FORMS_URL, {
       method: "POST",
@@ -33,11 +44,12 @@
       },
       body: JSON.stringify(body)
     }).then(function (res) {
-      return res.json();
-    }).then(function (data) {
-      if (!data || data.success !== true) {
-        var err = (data && data.message) || "Submission failed";
-        throw new Error(err);
+      return res.json().then(function (data) {
+        return { res: res, data: data };
+      });
+    }).then(function (out) {
+      if (!web3ResponseOk(out.data)) {
+        throw new Error(web3ErrorMessage(out.data, out.res));
       }
     });
   }
@@ -81,6 +93,7 @@
       var web3Body = {
         access_key: getWeb3AccessKey(),
         name: name,
+        from_name: "RyNex Land",
         email: email,
         subject: "RyNex Land — Get Offer (hero)",
         message: message
@@ -90,8 +103,12 @@
           alert("Thanks! We'll be in touch with your offer soon.");
           heroForm.reset();
         })
-        .catch(function () {
-          alert("Something went wrong. Please try again.");
+        .catch(function (err) {
+          alert(
+            err && err.message
+              ? "Form error: " + err.message
+              : "Something went wrong. Please try again."
+          );
         });
     });
   }
@@ -138,6 +155,7 @@
       var web3Body = {
         access_key: getWeb3AccessKey(),
         name: name,
+        from_name: "RyNex Land",
         email: email,
         subject: "RyNex Land — Property submission",
         message: message
@@ -147,8 +165,12 @@
           alert("Property submitted successfully!");
           sellerForm.reset();
         })
-        .catch(function () {
-          alert("Error submitting property.");
+        .catch(function (err) {
+          alert(
+            err && err.message
+              ? "Form error: " + err.message
+              : "Error submitting property."
+          );
         });
     });
   }
