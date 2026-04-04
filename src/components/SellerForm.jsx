@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import { API_BASE_URL } from "../config";
 
 function SellerForm() {
   const [formData, setFormData] = useState({
@@ -20,7 +21,7 @@ function SellerForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/api/leads/submit", { ...formData, phone: "" });
+      await axios.post(`${API_BASE_URL}/api/leads/submit`, { ...formData, phone: "" });
       alert("Property submitted successfully!");
       setFormData({
         name: "",

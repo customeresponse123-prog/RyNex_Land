@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import HeroLeadForm from "../components/HeroLeadForm";
 import SellerForm from "../components/SellerForm";
 
-/** Served from `client/public/LOGO.png` */
-const LOGO_SRC = "/LOGO.png";
+/** Public asset; `import.meta.env.BASE_URL` includes trailing slash (needed on GitHub Pages). */
+const LOGO_SRC = `${import.meta.env.BASE_URL}LOGO.png`;
 
 const SOCIAL_INSTAGRAM = "https://www.instagram.com/rynexland/";
 const SOCIAL_FACEBOOK = "https://www.facebook.com/rynexland";

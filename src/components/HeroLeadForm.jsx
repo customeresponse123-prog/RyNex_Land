@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import { API_BASE_URL } from "../config";
 
 const STATES = ["Tennessee", "North Carolina", "Georgia", "Alabama", "Other"];
 const COUNTIES = ["Davidson", "Shelby", "Knox", "Hamilton", "Rutherford", "Mecklenburg", "Wake", "Guilford", "Fulton", "Gwinnett", "Jefferson", "Madison", "Other"];
@@ -20,7 +21,7 @@ function HeroLeadForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/api/leads/submit", {
+      await axios.post(`${API_BASE_URL}/api/leads/submit`, {
         ...formData,
         phone: "",
         parcel_number: "",
