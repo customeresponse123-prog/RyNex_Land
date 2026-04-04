@@ -8,6 +8,8 @@
 html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
+  overflow-x: hidden;
+  max-width: 100%;
 }
 
 body {
@@ -30,6 +32,9 @@ a {
 .page-shell {
   min-height: 100vh;
   min-height: 100dvh;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0; /* flex child: allow shrink so wide content cannot force horizontal scroll */
   background: #F7F4EC;
   color: #1f2933;
   display: flex;
@@ -42,6 +47,8 @@ a {
   top: 0;
   left: 0;
   right: 0;
+  width: 100%;
+  max-width: 100%;
   z-index: 50;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   background-color: rgba(255, 255, 255, 0.95);
@@ -80,11 +87,11 @@ a {
 .header-logo img {
   width: auto;
   height: auto;
-  max-height: clamp(2.25rem, 8vw, 3rem);
-  max-width: min(240px, 52vw);
+  max-height: clamp(2rem, 9vw, 3rem);
+  max-width: min(200px, 70vw);
   border-radius: 0.65rem;
   object-fit: contain;
-  flex-shrink: 0;
+  flex-shrink: 1;
   display: block;
 }
 
@@ -204,6 +211,8 @@ a {
 .page-shell-main {
   flex: 1;
   margin-top: 0;
+  min-width: 0;
+  width: 100%;
 }
 
 @media (max-width: 768px) {
@@ -323,6 +332,9 @@ a {
 .hero-section {
   position: relative;
   isolation: isolate;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
   min-height: 100vh;
   min-height: 100dvh;
   display: flex;
@@ -335,8 +347,11 @@ a {
 .hero-bg-image {
   position: absolute;
   inset: 0;
+  display: block;
   width: 100%;
   height: 100%;
+  max-width: 100%;
+  max-height: none;
   object-fit: cover;
   object-position: center center;
   z-index: 0;
@@ -364,6 +379,9 @@ a {
   position: relative;
   z-index: 2;
   width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
   padding: 8rem 0 6rem;
   text-align: center;
   color: #ffffff;
@@ -373,11 +391,13 @@ a {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 4rem;
-  max-width: 1400px;
+  gap: clamp(1.5rem, 4vw, 4rem);
+  width: 100%;
+  max-width: min(1400px, 100%);
+  min-width: 0;
   margin: 0 auto;
-  padding-left: 2rem;
-  padding-right: 2rem;
+  padding-left: clamp(1rem, 4vw, 2rem);
+  padding-right: clamp(1rem, 4vw, 2rem);
   text-align: left;
 }
 
@@ -1058,6 +1078,9 @@ a {
 .site-footer-new {
   position: relative;
   isolation: isolate;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
   color: #fff;
   padding: 0;
   background-color: #1a3024;
@@ -1067,8 +1090,10 @@ a {
 .footer-bg-image {
   position: absolute;
   inset: 0;
+  display: block;
   width: 100%;
   height: 100%;
+  max-width: 100%;
   object-fit: cover;
   object-position: center center;
   z-index: 0;
