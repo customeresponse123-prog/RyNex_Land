@@ -1,33 +1,40 @@
 # RyNex_Land
 
-Land acquisition site: **React (Vite)** at the repo root, **Express** API in `server/`.
+Static marketing site (HTML + CSS + JavaScript) in **`web/`** — no React or build step. Express API in **`server/`**.
 
-## Live site (GitHub Pages)
+## GitHub Pages
 
-After each push to `main`, [Deploy to GitHub Pages](.github/workflows/deploy-pages.yml) builds the Vite app and publishes `dist/`.
+Workflow [`.github/workflows/deploy-pages.yml`](.github/workflows/deploy-pages.yml) publishes the **`web/`** folder on every push to `main`.
 
-1. Repo **Settings → Pages**: **Source** = **GitHub Actions**.
-2. Site URL: `https://<user>.github.io/RyNex_Land/` (match [vite.config.js](vite.config.js) `repoName` to your repository name).
+1. **Settings → Pages → Source:** **GitHub Actions**
+2. Live URL: `https://<user>.github.io/RyNex_Land/`
 
-## Run locally — frontend
+Edit files under **`web/`** only (`index.html`, `styles.css`, `app.js`).
 
-```bash
-npm install
-npm run dev
+### API URL (lead forms)
+
+In **`web/index.html`**, set the backend origin on `<body>`:
+
+```html
+<body data-api-url="https://your-api.example.com">
 ```
 
-Opens Vite at `http://localhost:5173/`.
+Leave empty or omit for `http://localhost:5000` during local testing. Your API must allow **CORS** from your GitHub Pages origin.
 
-## Run locally — API
+## Preview locally
+
+Open `web/index.html` in a browser, or from the repo root:
+
+```bash
+npx --yes serve web -p 3000
+```
+
+Then visit `http://localhost:3000`.
+
+## API server (local)
 
 ```bash
 cd server
 npm install
 npm run dev
 ```
-
-Forms call `VITE_API_URL` or `http://localhost:5000` by default ([`src/config.js`](src/config.js)). Copy `.env.example` to `.env` and set `VITE_API_URL` when the API is hosted.
-
-## Production API on GitHub Pages
-
-Add a repository secret **`VITE_API_URL`** (e.g. `https://your-api.onrender.com`) so the workflow build embeds the correct API URL. Your API must allow **CORS** from your GitHub Pages origin.
