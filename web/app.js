@@ -1,11 +1,19 @@
 (function () {
   "use strict";
 
+  var WEB3FORMS_URL = "https://api.web3forms.com/submit";
+
   function getApiBase() {
     var el = document.body;
     var url = el && el.getAttribute("data-api-url");
     if (url && url.trim()) return url.replace(/\/$/, "");
     return "http://localhost:5000";
+  }
+
+  function getWeb3AccessKey() {
+    var el = document.body;
+    var k = el && el.getAttribute("data-web3forms-access-key");
+    return k && k.trim() ? k.trim() : "";
   }
 
   function postLead(payload) {
@@ -16,25 +24,69 @@
     });
   }
 
+  function postWeb3Forms(body) {
+    return fetch(WEB3FORMS_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      body: JSON.stringify(body)
+    }).then(function (res) {
+      return res.json();
+    }).then(function (data) {
+      if (!data || data.success !== true) {
+        var err = (data && data.message) || "Submission failed";
+        throw new Error(err);
+      }
+    });
+  }
+
+  function submitOrWeb3(leadPayload, web3Body) {
+    if (getWeb3AccessKey()) {
+      return postWeb3Forms(web3Body);
+    }
+    return postLead(leadPayload).then(function (res) {
+      if (!res.ok) throw new Error("bad status");
+    });
+  }
+
   var heroForm = document.getElementById("hero-lead-form");
   if (heroForm) {
     heroForm.addEventListener("submit", function (e) {
       e.preventDefault();
       var fd = new FormData(heroForm);
       var state = fd.get("state") || "";
-      postLead({
-        name: fd.get("name"),
-        email: fd.get("email"),
-        county: fd.get("county"),
+      var county = fd.get("county") || "";
+      var name = fd.get("name");
+      var email = fd.get("email");
+      var leadPayload = {
+        name: name,
+        email: email,
+        county: county,
         state: state,
         phone: "",
         parcel_number: "",
         acres: "",
         asking_price: "",
         notes: state ? "State: " + state : ""
-      })
-        .then(function (res) {
-          if (!res.ok) throw new Error("bad status");
+      };
+      var message =
+        "Form: Hero (Get Offer)\n" +
+        "County: " +
+        county +
+        "\n" +
+        "State: " +
+        state;
+      var web3Body = {
+        access_key: getWeb3AccessKey(),
+        name: name,
+        email: email,
+        subject: "RyNex Land — Get Offer (hero)",
+        message: message
+      };
+      submitOrWeb3(leadPayload, web3Body)
+        .then(function () {
           alert("Thanks! We'll be in touch with your offer soon.");
           heroForm.reset();
         })
@@ -49,19 +101,49 @@
     sellerForm.addEventListener("submit", function (e) {
       e.preventDefault();
       var fd = new FormData(sellerForm);
-      postLead({
-        name: fd.get("name"),
-        email: fd.get("email"),
-        county: fd.get("county"),
-        state: fd.get("state"),
-        parcel_number: fd.get("parcel_number") || "",
-        acres: fd.get("acres") || "",
+      var name = fd.get("name");
+      var email = fd.get("email");
+      var county = fd.get("county") || "";
+      var state = fd.get("state") || "";
+      var notes = fd.get("notes") || "";
+      var parcel = fd.get("parcel_number") || "";
+      var acres = fd.get("acres") || "";
+      var leadPayload = {
+        name: name,
+        email: email,
+        county: county,
+        state: state,
+        parcel_number: parcel,
+        acres: acres,
         asking_price: fd.get("asking_price") || "",
-        notes: fd.get("notes") || "",
+        notes: notes,
         phone: ""
-      })
-        .then(function (res) {
-          if (!res.ok) throw new Error("bad status");
+      };
+      var message =
+        "Form: Submit Property\n" +
+        "County: " +
+        county +
+        "\n" +
+        "State: " +
+        state +
+        "\n" +
+        "Notes: " +
+        notes +
+        "\n" +
+        "Parcel: " +
+        parcel +
+        "\n" +
+        "Acreage: " +
+        acres;
+      var web3Body = {
+        access_key: getWeb3AccessKey(),
+        name: name,
+        email: email,
+        subject: "RyNex Land — Property submission",
+        message: message
+      };
+      submitOrWeb3(leadPayload, web3Body)
+        .then(function () {
           alert("Property submitted successfully!");
           sellerForm.reset();
         })
