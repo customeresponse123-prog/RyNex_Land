@@ -27,6 +27,13 @@ npm run dev
 
 The site uses `http://localhost:5000` for forms unless you set `data-api-url` on `<body>` in `web/index.html`.
 
+## Supabase (store form submissions)
+
+1. In the Supabase dashboard, run the SQL in [`supabase/leads.sql`](supabase/leads.sql) (creates `public.leads` and allows **anonymous inserts** for the anon key).
+2. Copy **Project URL** and **anon public** key from **Project Settings → API**.
+3. In `web/index.html`, set `data-supabase-url` and `data-supabase-anon-key` on `<body>` (empty strings disable Supabase).
+4. With Web3Forms also configured, each submit sends **email** and **database row**; with only Supabase, only the database is used.
+
 ## GitHub Pages
 
 Workflow [`.github/workflows/deploy-pages.yml`](.github/workflows/deploy-pages.yml) publishes the **contents** of **`web/`** as the site root (so `web/index.html` is served at `/`). It runs on push to `main` and can be re-run manually under **Actions**.

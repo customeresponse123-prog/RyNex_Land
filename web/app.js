@@ -25,6 +25,7 @@
   }
 
   var WEB3FORMS_URL = "https://api.web3forms.com/submit";
+  var SUPABASE_TABLE = "leads";
 
   function getApiBase() {
     var el = document.body;
@@ -37,6 +38,44 @@
     var el = document.body;
     var k = el && el.getAttribute("data-web3forms-access-key");
     return k && k.trim() ? k.trim() : "";
+  }
+
+  function getSupabaseUrl() {
+    var el = document.body;
+    var u = el && el.getAttribute("data-supabase-url");
+    return u && u.trim() ? u.trim().replace(/\/$/, "") : "";
+  }
+
+  function getSupabaseAnonKey() {
+    var el = document.body;
+    var k = el && el.getAttribute("data-supabase-anon-key");
+    return k && k.trim() ? k.trim() : "";
+  }
+
+  function isSupabaseConfigured() {
+    return !!(getSupabaseUrl() && getSupabaseAnonKey());
+  }
+
+  function insertSupabaseLead(row) {
+    var base = getSupabaseUrl();
+    var key = getSupabaseAnonKey();
+    return fetch(base + "/rest/v1/" + SUPABASE_TABLE, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        apikey: key,
+        Authorization: "Bearer " + key,
+        Prefer: "return=minimal"
+      },
+      body: JSON.stringify(row)
+    }).then(function (res) {
+      if (!res.ok) {
+        return res.text().then(function (t) {
+          var msg = (t && t.slice(0, 200)) || "Supabase HTTP " + res.status;
+          throw new Error(msg);
+        });
+      }
+    });
   }
 
   function postLead(payload) {
@@ -77,13 +116,33 @@
     });
   }
 
-  function submitOrWeb3(leadPayload, web3Body) {
-    if (getWeb3AccessKey()) {
-      return postWeb3Forms(web3Body);
+  /**
+   * Runs Web3Forms and/or Supabase and/or local Express based on body data-* config.
+   */
+  function submitLead(leadPayload, web3Body, supabaseRow) {
+    var useWeb3 = !!getWeb3AccessKey();
+    var useSb = isSupabaseConfigured();
+    var tasks = [];
+
+    if (useWeb3) {
+      tasks.push(postWeb3Forms(web3Body));
     }
-    return postLead(leadPayload).then(function (res) {
-      if (!res.ok) throw new Error("bad status");
-    });
+    if (useSb) {
+      tasks.push(insertSupabaseLead(supabaseRow));
+    }
+    if (!useWeb3 && !useSb) {
+      tasks.push(
+        postLead(leadPayload).then(function (res) {
+          if (!res.ok) throw new Error("bad status");
+        })
+      );
+    }
+
+    if (tasks.length === 0) {
+      return Promise.reject(new Error("Configure Web3Forms, Supabase, or data-api-url for Express."));
+    }
+
+    return Promise.all(tasks);
   }
 
   var heroForm = document.getElementById("hero-lead-form");
@@ -121,7 +180,19 @@
         subject: "RyNex Land — Get Offer (hero)",
         message: message
       };
-      submitOrWeb3(leadPayload, web3Body)
+      var supabaseRow = {
+        form_type: "hero",
+        name: name,
+        email: email,
+        county: county,
+        state: state,
+        notes: leadPayload.notes,
+        parcel_number: "",
+        acres: "",
+        asking_price: "",
+        phone: ""
+      };
+      submitLead(leadPayload, web3Body, supabaseRow)
         .then(function () {
           alert("Thanks! We'll be in touch with your offer soon.");
           heroForm.reset();
@@ -183,7 +254,19 @@
         subject: "RyNex Land — Property submission",
         message: message
       };
-      submitOrWeb3(leadPayload, web3Body)
+      var supabaseRow = {
+        form_type: "seller",
+        name: name,
+        email: email,
+        county: county,
+        state: state,
+        notes: notes,
+        parcel_number: parcel,
+        acres: acres,
+        asking_price: leadPayload.asking_price,
+        phone: ""
+      };
+      submitLead(leadPayload, web3Body, supabaseRow)
         .then(function () {
           alert("Property submitted successfully!");
           sellerForm.reset();
