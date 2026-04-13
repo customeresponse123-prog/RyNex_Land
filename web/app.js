@@ -59,14 +59,18 @@
   function insertSupabaseLead(row) {
     var base = getSupabaseUrl();
     var key = getSupabaseAnonKey();
+    var headers = {
+      "Content-Type": "application/json",
+      apikey: key,
+      Prefer: "return=minimal"
+    };
+    // Legacy anon key is a JWT (starts with eyJ). New sb_publishable_* keys are not JWTs—use apikey only.
+    if (key.indexOf("eyJ") === 0) {
+      headers.Authorization = "Bearer " + key;
+    }
     return fetch(base + "/rest/v1/" + SUPABASE_TABLE, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        apikey: key,
-        Authorization: "Bearer " + key,
-        Prefer: "return=minimal"
-      },
+      headers: headers,
       body: JSON.stringify(row)
     }).then(function (res) {
       if (!res.ok) {
