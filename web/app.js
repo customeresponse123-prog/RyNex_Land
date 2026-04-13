@@ -158,12 +158,13 @@
       var county = fd.get("county") || "";
       var name = fd.get("name");
       var email = fd.get("email");
+      var phone = (fd.get("phone") || "").trim();
       var leadPayload = {
         name: name,
         email: email,
         county: county,
         state: state,
-        phone: "",
+        phone: phone,
         parcel_number: "",
         acres: "",
         asking_price: "",
@@ -171,6 +172,12 @@
       };
       var message =
         "Form: Hero (Get Offer)\n" +
+        "Email: " +
+        email +
+        "\n" +
+        "Phone: " +
+        (phone || "—") +
+        "\n" +
         "County: " +
         county +
         "\n" +
@@ -194,7 +201,7 @@
         parcel_number: "",
         acres: "",
         asking_price: "",
-        phone: ""
+        phone: phone
       };
       submitLead(leadPayload, web3Body, supabaseRow)
         .then(function () {
@@ -218,6 +225,7 @@
       var fd = new FormData(sellerForm);
       var name = fd.get("name");
       var email = fd.get("email");
+      var phone = (fd.get("phone") || "").trim();
       var county = fd.get("county") || "";
       var state = fd.get("state") || "";
       var notes = fd.get("notes") || "";
@@ -232,10 +240,16 @@
         acres: acres,
         asking_price: fd.get("asking_price") || "",
         notes: notes,
-        phone: ""
+        phone: phone
       };
       var message =
         "Form: Submit Property\n" +
+        "Email: " +
+        email +
+        "\n" +
+        "Phone: " +
+        (phone || "—") +
+        "\n" +
         "County: " +
         county +
         "\n" +
@@ -268,7 +282,7 @@
         parcel_number: parcel,
         acres: acres,
         asking_price: leadPayload.asking_price,
-        phone: ""
+        phone: phone
       };
       submitLead(leadPayload, web3Body, supabaseRow)
         .then(function () {

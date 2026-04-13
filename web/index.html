@@ -78,7 +78,8 @@
           <div class="hero-form-wrap">
             <form id="hero-lead-form" class="hero-form">
               <input name="name" class="hero-form-input" placeholder="Name" required />
-              <input name="email" type="email" class="hero-form-input" placeholder="Email" required />
+              <input name="email" type="email" class="hero-form-input" placeholder="Email" required autocomplete="email" />
+              <input name="phone" type="tel" class="hero-form-input" placeholder="Phone" inputmode="tel" autocomplete="tel" />
               <select name="county" class="hero-form-input" required>
                 <option value="">County</option>
                 <option>Davidson</option><option>Shelby</option><option>Knox</option><option>Hamilton</option><option>Rutherford</option>
@@ -195,7 +196,8 @@
               <div class="situations-form-col">
                 <form id="seller-form" class="situations-form">
                   <input name="name" class="form-input" placeholder="Your Name" required />
-                  <input name="email" type="email" class="form-input" placeholder="Email Address" required />
+                  <input name="email" type="email" class="form-input" placeholder="Email Address" required autocomplete="email" />
+                  <input name="phone" type="tel" class="form-input situations-form-phone" placeholder="Phone" inputmode="tel" autocomplete="tel" />
                   <input name="county" class="form-input" placeholder="County" required />
                   <input name="state" class="form-input" placeholder="State" required />
                   <textarea name="notes" class="form-textarea" rows="4" placeholder="Any Property Details"></textarea>

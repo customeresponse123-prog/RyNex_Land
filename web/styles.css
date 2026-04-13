@@ -994,6 +994,7 @@ canvas {
   margin: 0;
 }
 
+.situations-form .situations-form-phone,
 .situations-form .form-textarea,
 .situations-form .situations-form-btn,
 .situations-form .situations-form-disclaimer {
